@@ -1,0 +1,27 @@
+# image_buld.yml
+# 
+# Ansible playbook to build the image.
+#
+
+- name: Build the image
+  hosts: localhost
+  connection: local
+  gather_facts: no 
+  vars_files:
+    - vault.yml
+  tasks:
+    - command: ansible-container build
+      args:
+        chdir: "{{ project }}"
+
+    - command: >
+        ansible-container push
+        --push-to ansibletesting
+        --username "{{ dockerhub_username }}"
+        --password "{{ dockerhub_password }}"
+        --email "{{ dockerhub_email }}"
+      args:
+        chdir: "{{ project }}" 
+      register: output
+
+    - debug: var=output

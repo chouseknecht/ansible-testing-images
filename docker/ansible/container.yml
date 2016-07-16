@@ -1,6 +1,6 @@
 version: "1"
 services:
-  docker:
+  modules:
     image: centos:7
     dev_overrides:
       command: ["/run.sh"]
