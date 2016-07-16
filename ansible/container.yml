@@ -2,7 +2,13 @@ version: "1"
 services:
   docker:
     image: centos:7
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
+    dev_overrides:
+      command: ["/run.sh"]
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /home/vagrant/ansible:/ansible
+        - /home/vagrant/data:/data
+      environment:
+        DOCKER_DATA_PATH: /home/vagrant/data
+        DOCKER_HOST_IP: 172.17.0.1 
 registries: {}

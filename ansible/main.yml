@@ -1,18 +1,24 @@
 # 
-# Install docker, pip dependencies and ansible pre-reqs
+# Install Ansible pre-reqs and docker.
 #
 - hosts: docker 
   gather_facts: false
   tasks:
-    - yum: name=epel-release state=present
-    - yum: name="@Development Tools" state=present
-    - yum: name="{{ item }}" state=latest 
+    - name: Install epel 
+      yum: name=epel-release state=present
+    - name: Install development tools
+      yum: name="@Development Tools" state=present
+    - name: Install yum packages 
+      yum: name="{{ item }}" state=latest 
       with_items:
         - python-devel
         - python-pip
         - libffi-devel
         - openssl-devel
-    - pip: name="{{ item }}" 
+        - openssl
+        - net-tools
+    - name: Install pip packages 
+      pip: name="{{ item }}" 
       with_items:
         - paramiko
         - PyYAML
@@ -21,6 +27,9 @@
         - six
         - pycrypto 
         - docker-compose
-    - copy: src=docker.repo dest=/etc/yum.repos.d/docker.repo force=yes
-    - yum: name=docker-engine
-    - service: name=docker state=started
+    - name: Copy docker.repo 
+      copy: src=docker.repo dest=/etc/yum.repos.d/docker.repo force=yes
+    - name: Install docker-engine
+      yum: name=docker-engine
+    - name: Copy run.sh
+      copy: src=../run.sh dest=/run.sh force=yes mode=0755
