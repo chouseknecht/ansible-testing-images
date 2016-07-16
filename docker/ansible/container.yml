@@ -10,5 +10,4 @@ services:
         - /home/vagrant/data:/data
       environment:
         DOCKER_DATA_PATH: /home/vagrant/data
-        DOCKER_HOST_IP: 172.17.0.1 
 registries: {}
