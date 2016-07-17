@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Run integration test for Ansible's Docker modules
+# Run integration tests for Ansible's Docker modules
 #
 
 source /ansible/hacking/env-setup
